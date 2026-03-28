@@ -51,7 +51,7 @@ runs:
       run: ${{ inputs.pre-build-script }}
 
     - name: Build and release Go via GoReleaser
-      uses: jdfalk/release-go-action@e87e6e57bf1c7089e74c94f789b580d3c5737729 # v2.0.3
+      uses: jdfalk/release-go-action@f6f68dcea1d4a28b27d5f89d0117be987dc6eeb6 # v2.0.4
       env:
         GOEXPERIMENT: ${{ inputs.go-experiment }}
       with:
