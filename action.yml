@@ -27,6 +27,15 @@ inputs:
     description: 'Value for GOEXPERIMENT environment variable'
     required: false
     default: ''
+  github-token:
+    description: 'Token used for git push of release tags. Must have
+      workflows:write when the tag includes commits that modify
+      .github/workflows/ files (typically a GitHub App installation
+      token minted via actions/create-github-app-token). Falls back
+      to the default GITHUB_TOKEN for runs that do not touch workflow
+      files.'
+    required: false
+    default: ${{ github.token }}
 
 runs:
   using: 'composite'
@@ -51,7 +60,7 @@ runs:
       run: ${{ inputs.pre-build-script }}
 
     - name: Build and release Go via GoReleaser
-      uses: jdfalk/release-go-action@491fe9a2900a121b49a2ac1fde408e5e85a641f1 # v2.0.5+
+      uses: jdfalk/release-go-action@319bd21f49f5ad1cd0f806531a0fd23d64facaa7 # v1.4.0
       env:
         GOEXPERIMENT: ${{ inputs.go-experiment }}
       with:
@@ -62,6 +71,7 @@ runs:
         run-linters: 'true'
         create-release: 'true'
         skip-publish: 'false'
+        github-token: ${{ inputs.github-token }}
 
     - name: Upload Go artifacts
       if: always()
